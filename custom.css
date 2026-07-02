@@ -1,0 +1,449 @@
+/* ============================================================
+   EV Market Forecast Dashboard — Custom Styles
+   Font: Inter (Google Fonts)
+   Theme: Dark, Glassmorphism, Neon Accents
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary:    #0d1117;
+  --bg-secondary:  #161b22;
+  --bg-tertiary:   #21262d;
+  --border:        #30363d;
+  --border-bright: #3d444d;
+  --text-primary:  #e6edf3;
+  --text-secondary:#c9d1d9;
+  --text-muted:    #8b949e;
+  --cyan:          #39d0d8;
+  --green:         #3fb950;
+  --purple:        #bc8cff;
+  --orange:        #ff9f1c;
+  --pink:          #f85149;
+  --blue:          #58a6ff;
+  --gold:          #ffd700;
+  --glow-cyan:     0 0 20px rgba(57,208,216,0.30);
+  --glow-green:    0 0 20px rgba(63,185,80,0.30);
+  --glow-purple:   0 0 20px rgba(188,140,255,0.30);
+  --transition:    all 0.25s cubic-bezier(0.4,0,0.2,1);
+  --radius-sm:     8px;
+  --radius-md:     12px;
+  --radius-lg:     16px;
+}
+
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg-primary);
+}
+
+body::-webkit-scrollbar { width: 6px; }
+body::-webkit-scrollbar-track { background: var(--bg-primary); }
+body::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+/* ── Header ────────────────────────────────────────────────── */
+.header-bar {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1f2d 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--green) 50%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.header-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.header-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-badge {
+  background: rgba(63,185,80,0.12);
+  border: 1px solid rgba(63,185,80,0.35);
+  color: var(--green);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── Sidebar ────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  min-height: calc(100vh - 73px);
+  overflow-y: auto;
+}
+
+.sidebar-section-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.filter-group {
+  margin-bottom: 24px;
+}
+
+.filter-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 7px;
+  display: block;
+}
+
+/* ── KPI Cards ──────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 1400px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px)  { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.kpi-card {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: default;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  transition: var(--transition);
+}
+
+.kpi-card.cyan::before   { background: linear-gradient(90deg, var(--cyan), transparent); }
+.kpi-card.green::before  { background: linear-gradient(90deg, var(--green), transparent); }
+.kpi-card.purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+.kpi-card.orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+.kpi-card.gold::before   { background: linear-gradient(90deg, var(--gold), transparent); }
+
+.kpi-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-3px);
+}
+.kpi-card.cyan:hover   { box-shadow: var(--glow-cyan); }
+.kpi-card.green:hover  { box-shadow: var(--glow-green); }
+.kpi-card.purple:hover { box-shadow: var(--glow-purple); }
+.kpi-card.orange:hover { box-shadow: 0 0 20px rgba(255,159,28,0.30); }
+.kpi-card.gold:hover   { box-shadow: 0 0 20px rgba(255,215,0,0.25); }
+
+.kpi-icon {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.kpi-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.kpi-card.cyan   .kpi-value { color: var(--cyan); }
+.kpi-card.green  .kpi-value { color: var(--green); }
+.kpi-card.purple .kpi-value { color: var(--purple); }
+.kpi-card.orange .kpi-value { color: var(--orange); }
+.kpi-card.gold   .kpi-value { color: var(--gold); }
+
+.kpi-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+  font-weight: 400;
+}
+
+/* ── Chart Cards ────────────────────────────────────────────── */
+.chart-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  transition: var(--transition);
+  margin-bottom: 16px;
+}
+
+.chart-card:hover {
+  border-color: var(--border-bright);
+}
+
+/* ── Main Content ───────────────────────────────────────────── */
+.main-content {
+  padding: 22px 24px;
+  background: var(--bg-primary);
+  min-height: calc(100vh - 73px);
+}
+
+/* ── Section Labels ─────────────────────────────────────────── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Dropdown overrides ─────────────────────────────────────── */
+.Select-control {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+.Select-input > input {
+  color: var(--text-primary) !important;
+}
+
+.Select-value-label {
+  color: var(--text-primary) !important;
+}
+
+.Select-value {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+.Select-value-icon {
+  border-right: 1px solid var(--border) !important;
+  color: var(--pink) !important;
+}
+
+.Select-value-icon:hover {
+  background-color: rgba(248, 81, 73, 0.1) !important;
+  color: var(--pink) !important;
+}
+
+.Select-menu-outer {
+  background-color: var(--bg-tertiary) !important;
+  border: 1px solid var(--border) !important;
+  z-index: 1000 !important;
+}
+
+.VirtualizedSelectOption {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+.VirtualizedSelectFocusedOption {
+  background-color: var(--bg-secondary) !important;
+  color: var(--cyan) !important;
+}
+
+.Select-placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* ── Slider ─────────────────────────────────────────────────── */
+.rc-slider-rail { background-color: var(--border) !important; }
+.rc-slider-track { background-color: var(--cyan) !important; }
+.rc-slider-handle {
+  border-color: var(--cyan) !important;
+  background-color: var(--bg-secondary) !important;
+  box-shadow: 0 0 8px rgba(57,208,216,0.5) !important;
+}
+
+/* ── Tabs ───────────────────────────────────────────────────── */
+.custom-tabs .tab {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border) !important;
+  color: var(--text-muted) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+}
+
+.custom-tabs .tab--selected {
+  background-color: var(--bg-tertiary) !important;
+  border-bottom-color: var(--cyan) !important;
+  color: var(--cyan) !important;
+}
+
+.custom-tabs .tab-content {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* ── Data Table ─────────────────────────────────────────────── */
+.dash-spreadsheet-container {
+  background-color: var(--bg-secondary) !important;
+  border-radius: var(--radius-sm) !important;
+  overflow: hidden !important;
+}
+
+.dash-spreadsheet-inner th {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-muted) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  border-color: var(--border) !important;
+}
+
+.dash-spreadsheet-inner td {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.82rem !important;
+  border-color: var(--border) !important;
+}
+
+.dash-spreadsheet-inner tr:hover td {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn-download {
+  background: linear-gradient(135deg, rgba(57,208,216,0.15), rgba(63,185,80,0.10));
+  border: 1px solid var(--cyan) !important;
+  color: var(--cyan) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 8px 18px !important;
+  border-radius: var(--radius-sm) !important;
+  cursor: pointer !important;
+  transition: var(--transition) !important;
+  letter-spacing: 0.3px !important;
+}
+
+.btn-download:hover {
+  background: rgba(57,208,216,0.20) !important;
+  box-shadow: var(--glow-cyan) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── Radio buttons ──────────────────────────────────────────── */
+.radio-group .form-check-label {
+  color: var(--text-secondary) !important;
+  font-size: 0.82rem !important;
+  cursor: pointer !important;
+}
+
+/* ── Forecast model toggle ──────────────────────────────────── */
+.model-tab {
+  display: inline-flex;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 16px 32px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.kpi-card { animation: fadeInUp 0.4s ease both; }
+.kpi-card:nth-child(1) { animation-delay: 0.05s; }
+.kpi-card:nth-child(2) { animation-delay: 0.10s; }
+.kpi-card:nth-child(3) { animation-delay: 0.15s; }
+.kpi-card:nth-child(4) { animation-delay: 0.20s; }
+.kpi-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header-bar   { padding: 14px 16px; }
+  .header-title { font-size: 1.1rem; }
+  .main-content { padding: 14px 10px; }
+  .sidebar      { min-height: auto; }
+}
